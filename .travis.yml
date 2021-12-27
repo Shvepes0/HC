@@ -37,7 +37,7 @@ install:
   - rm -r -f .buildozer
   - ls -la
   - yes | cp -f buildozer-64bit.spec buildozer.spec
-  - if [[ $TRAVIS_PYTHON_VERSION == 3.3 ]]; then pip install virtualenv==15.2.0; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 3.3 ]]; then pip install virtualenv==15.2.0 tox==3.1.3; fi
   - yes | travis_wait 20 buildozer android debug
   - ls -la
   - ls bin/ -l
