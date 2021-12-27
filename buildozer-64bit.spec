@@ -1,10 +1,10 @@
 [app]
 
 # (str) Title of your application
-title = mobileapp002
+title = mobileapp001
 
 # (str) Package name
-package.name = mobileapp002
+package.name = mobileapp001
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.shvepes
