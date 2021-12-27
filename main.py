@@ -12,6 +12,9 @@ from kivy.uix.stencilview import StencilView
 from functools import partial
 from kivy.core.window import Window
 
+for i in range(100):
+    print(".")
+
 Builder.load_string("""
 
 <FirstScreen>
