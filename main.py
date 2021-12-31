@@ -205,7 +205,7 @@ Builder.load_string("""
                         root.manager.transition.direction = 'left'
                         root.manager.current = "first"
                     Image:
-                        source: 'Free_Sample_By_Wix2.png'
+                        source: 'Free_Sample_By_Wix.jfif'
                         allow_stretch: True
                         keep_ratio: False
                         center_x: self.parent.center_x
