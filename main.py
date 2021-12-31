@@ -1,6 +1,7 @@
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.image import Image
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.widget import Widget
@@ -11,9 +12,8 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.stencilview import StencilView
 from functools import partial
 from kivy.core.window import Window
+import time
 
-for i in range(100):
-    print(".")
 
 Builder.load_string("""
 
@@ -75,13 +75,13 @@ Builder.load_string("""
             Button:
                 size_hint:(.2, .2)
                 font_size:32
-                text:"%"
-                on_press:root.pressed('%')                
+                text:"/"
+                on_press:root.pressed('/')
             Button:
                 size_hint:(.2, .2)
                 font_size:32
-                text:"/"
-                on_press:root.pressed('/')
+                text:"<--"
+                on_press:root.back()               
             # second row
             Button:
                 size_hint:(.2, .2)
@@ -185,72 +185,203 @@ Builder.load_string("""
 
     BoxLayout:
         orientation: "vertical"
-        size: root.width, root.height
+        BoxLayout:
+            orientation: "vertical"
+            GridLayout:
+                rows: 1
+                cols: 2
+                size_hint_y: 0.3
+                Spinner:
+                    id: main_spinner
+                    size_hint_y: 0.3
+                    size: self.texture_size
+                    text: "Length"
+                    values: ["Length", "Time", "Mass"]
+                    on_text: root.choice() 
+                Button:
+                    size_hint:(.2, .2)
+                    background_color:(0, 0, 0, 0)
+                    on_press :
+                        root.manager.transition.direction = 'left'
+                        root.manager.current = "first"
+                    Image:
+                        source: 'Free_Sample_By_Wix2.png'
+                        allow_stretch: True
+                        keep_ratio: False
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        
+                    
+                GridLayout:
+                    rows: 2
+                    #orientation: "vertical"
+                    #size: root.width, root.height
 
-        Label:
-            text: ''    
+            
+                
+            GridLayout:
+                rows: 2
+                cols: 2
+                GridLayout:
+                    size_hint_x: 1.5
+                    width: 2
+                    width: 2
+                    rows: 2
+                    cols: 1
+                    spacing: 1.5
+        
+                    Label:
+                        id: from_id
+                        markup: True
+                        text: "0"
+                        text_size: self.size
+                        font_size:40
+                        halign: 'left'
+                        valign: 'bottom'
+                        background_color: (1, 1, 1, 1)
+                        canvas.before:
+                            Color:
+                                rgba: self.background_color
+                            Rectangle:
+                                size: self.size
+                                pos: self.pos
+                        color: (0, 0, 0, 1)
+                        on_text: root.length(from_id.text, to_id.text, spinner_id.text, spinner2_id.text)
+                        
+                    Label:
+                        id: to_id
+                        text: "0"
+                        text_size: self.size
+                        font_size:40
+                        halign: 'left'
+                        valign: 'bottom'
+                        background_color: (1, 1, 1, 1)
+                        canvas.before:
+                            Color:
+                                rgba: self.background_color
+                            Rectangle:
+                                size: self.size
+                                pos: self.pos
+                        color: (0, 0, 0, 1)
+        
+                GridLayout:
+                    rows: 2
+                    cols: 1
+                    
+                    Spinner:
+                        id: spinner_id
+                        font_size:32
+                        text: "-"
+                        values: ["km", "m", "cm","mm","mil"]
+        
+                    Spinner:
+                        id: spinner2_id
+                        font_size:32
+                        text: "-"
+                        values: ["km", "m", "cm","mm","mil"]
+        
+                        #on_text: root.spinner_clicked(spinner_id.text)
 
-        Label:
-            id: click_label
-            text: "Pick Unit Below"
-            font_size: 32
-        Label:
-            text: ''
+    
+        BoxLayout:
+            size_hint_y: 1.3
+            height: 1.3
+            orientation: "vertical"
+            size: root.width, root.height
+            GridLayout:
+                cols:3
+                rows:5
+                Button:
+                    markup: True
+                    size_hint:(.2, .2)
+                    font_size:40
+                    text:"[font=Leaner-Thin]7[/font]"
+                    background_color:(157/255,157/255, 157/255, 1)
+                    on_press:root.pressed(7)
+                Button:
+                    markup: True
+                    size_hint:(.2, .2)
+                    font_size:40
+                    text:"[font=Leaner-Thin]8[/font]"
+                    background_color:(157/255,157/255, 157/255, 1)
+                    on_press:root.pressed(8)
+                Button:
+                    markup: True
+                    size_hint:(.2, .2)
+                    font_size:40
+                    text:"[font=Leaner-Thin]9[/font]"
+                    background_color:(157/255,157/255, 157/255, 1)
+                    on_press:root.pressed(9)
+                Button:
+                    markup: True
+                    size_hint:(.2, .2)
+                    font_size:40
+                    text:"[font=Leaner-Thin]4[/font]"
+                    background_color:(157/255,157/255, 157/255, 1)
+                    on_press:root.pressed(4)
+                Button:
+                    markup: True
+                    size_hint:(.2, .2)
+                    font_size:40
+                    text:"[font=Leaner-Thin]5[/font]"
+                    background_color:(157/255,157/255, 157/255, 1)
+                    on_press:root.pressed(5)
+                Button:
+                    markup: True
+                    size_hint:(.2, .2)
+                    font_size:40
+                    text:"[font=Leaner-Thin]6[/font]"
+                    background_color:(157/255,157/255, 157/255, 1)
+                    on_press:root.pressed(6)
+                Button:
+                    markup: True
+                    size_hint:(.2, .2)
+                    font_size:40
+                    text:"[font=Leaner-Thin]1[/font]"
+                    background_color:(157/255,157/255, 157/255, 1)
+                    on_press:root.pressed(1)
+                Button:
+                    markup: True
+                    size_hint:(.2, .2)
+                    font_size:40
+                    text:"[font=Leaner-Thin]2[/font]"
+                    background_color:(157/255,157/255, 157/255, 1)
+                    on_press:root.pressed(2)
+                Button:
+                    markup: True
+                    size_hint:(.2, .2)
+                    font_size:40
+                    text:"[font=Leaner-Thin]3[/font]"
+                    background_color:(157/255,157/255, 157/255, 1)
+                    on_press:root.pressed(3)
+                Button:
+                    markup: True
+                    size_hint:(.2, .2)
+                    font_size:40
+                    markup:True
+                    on_press:root.back()
+                    background_color:(157/255,157/255, 157/255, 1)
+                    Image:
+                        source: 'backspace.png'
+                        image_size: 0.5
+                        allow_stretch: True
+                        keep_ratio: False
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                Button:
+                    markup: True
+                    size_hint:(.2, .2)
+                    font_size:40
+                    text:"[font=Leaner-Thin]0[/font]"
+                    background_color:(157/255,157/255, 157/255, 1)
+                    on_press:root.pressed(0)
+                Button:
+                    markup: True
+                    size_hint:(.2, .2)
+                    font_size:40
+                    text:"[font=Leaner-Thin]C[/font]"
+                    on_press:root.clear()
 
-        Spinner:
-            id: main_spinner
-            text: "length"
-            values: ["length", "time", "mass"]
-
-            on_text: root.choice(main_spinner.text, spinner_id, spinner2_id) 
-
-        GridLayout:
-            rows: 2
-            cols: 2
-
-            TextInput:
-                id: from_id
-                text: ""
-                on_text: root.length(from_id.text, to_id.text, spinner_id.text, spinner2_id.text)
-
-            Spinner:
-                id: spinner_id
-                text: "-"
-                values: ["km", "m", "cm","mm","mil"]
-
-
-
-            TextInput:
-                id: to_id
-                text: ""
-
-            Spinner:
-                id: spinner2_id
-                text: "-"
-                values: ["km", "m", "cm","mm","mil"]
-
-                #on_text: root.spinner_clicked(spinner_id.text)
-
-
-
-        Label:
-            text: ''
-        Label:
-            text: ''
-        Label:
-            text: ''
-
-
-    AnchorLayout:
-        anchor_x: 'right'
-        anchor_y: 'bottom'
-        Button:
-            text: "First Screen"
-            size_hint: 0.3, 0.1
-            #pos: 280,200
-            on_press : 
-                root.manager.transition.direction = 'left'
-                root.manager.current = "first"
 
 """)
 
@@ -263,13 +394,6 @@ class SecondScreen(Screen):
     def clear(self):
         self.ids.input.text = "0"
 
-    def back(self):
-        expression = self.ids.input.text
-        expression = expression[:-1]
-        self.ids.input.text = expression
-
-    # function take button inuputs pressed
-    # by user
     def pressed(self, button):
         # expression to store all text field values
         expression = self.ids.input.text
@@ -297,30 +421,61 @@ class SecondScreen(Screen):
             # set text field to Error if
             # try block throws an error
             self.ids.input.text = "Error"
+    def back(self):
+        expression = self.ids.input.text
+        expression = expression[:-1]
+        self.ids.input.text = expression
+
 
 
 class ThirdScreen(Screen):
-    def choice(self, main_spinner, spinnerv_id, spinner2v_id):
-        if self.ids.main_spinner.text == "length":
+    def choice(self):
+        if self.ids.main_spinner.text == "Length":
             self.ids.spinner_id.values = ['km', 'm', 'cm', 'mm', 'mil']
             self.ids.spinner2_id.values = ['km', 'm', 'cm', 'mm', 'mil']
 
             self.ids.spinner_id.text = f'-'
             self.ids.spinner2_id.text = f'-'
 
-        if self.ids.main_spinner.text == "mass":
+        if self.ids.main_spinner.text == "Mass":
             self.ids.spinner_id.values = ['mg', 'g', 'kg', 't']
             self.ids.spinner2_id.values = ['mg', 'g', 'kg', 't']
 
             self.ids.spinner_id.text = f'-'
             self.ids.spinner2_id.text = f'-'
 
-        if self.ids.main_spinner.text == "time":
+        if self.ids.main_spinner.text == "Time":
             self.ids.spinner_id.values = ['msec', 'sec', 'min', 'hour', 'day', 'year']
             self.ids.spinner2_id.values = ['msec', 'sec', 'min', 'hour', 'day', 'year']
 
             self.ids.spinner_id.text = f'-'
             self.ids.spinner2_id.text = f'-'
+
+    # KEYBOARD
+
+    def pressed(self, button):
+        # expression to store all text field values
+        expression = self.ids.from_id.text
+        # if text field expression contains
+        # error then set it to empty field
+        if "Error" in expression:
+            expression = "0"
+        # if text filed expression contains
+        # 0 then first set the field to empty and
+        # display the button text pressed by user
+        if expression == "0":
+            self.ids.from_id.text = ""
+            self.ids.from_id.text = f"{button}"
+        else:
+            self.ids.from_id.text = f"{expression}{button}"
+
+    def back(self):
+        expression = self.ids.from_id.text
+        expression = expression[:-1]
+        self.ids.from_id.text = expression
+    def clear(self):
+        self.ids.from_id.text = "0"
+
 
     # LENGHT
 
@@ -329,121 +484,222 @@ class ThirdScreen(Screen):
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
+                self.ids.from_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1000}'
         if value == "km" and value2 == "cm":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 100000}'
         if value == "km" and value2 == "mm":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1e+6}'
         if value == "km" and value2 == "mil":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1.609}'
         if value == "m" and value2 == "km":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1000}'
         if value == "m" and value2 == "cm":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 100}'
         if value == "m" and value2 == "mm":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1000}'
         if value == "m" and value2 == "mil":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1609}'
         if value == "cm" and value2 == "km":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1e-5}'
         if value == "cm" and value2 == "m":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 100}'
         if value == "cm" and value2 == "mm":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 10}'
         if value == "cm" and value2 == "mil":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 160934}'
         if value == "mm" and value2 == "km":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1e+6}'
         if value == "mm" and value2 == "m":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1000}'
         if value == "mm" and value2 == "cm":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 10}'
         if value == "mm" and value2 == "mil":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1.609e+6}'
         if value == "mil" and value2 == "km":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1.609}'
         if value == "mil" and value2 == "m":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1609}'
         if value == "mil" and value2 == "cm":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 160934}'
-        if value == "mil" and value2 == "km":
+        if value == "mil" and value2 == "mm":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1.609e+6}'
 
         # MASS
@@ -453,72 +709,132 @@ class ThirdScreen(Screen):
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1000}'
         if value == "mg" and value2 == "kg":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1e+6}'
         if value == "mg" and value2 == "t":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1e+9}'
         if value == "g" and value2 == "mg":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1000}'
         if value == "g" and value2 == "kg":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1000}'
         if value == "g" and value2 == "t":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1e+6}'
         if value == "kg" and value2 == "mg":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1e+9}'
         if value == "kg" and value2 == "g":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1000}'
         if value == "kg" and value2 == "t":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1000}'
         if value == "t" and value2 == "mg":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1e+9}'
         if value == "t" and value2 == "g":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1e+6}'
         if value == "t" and value2 == "kg":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1000}'
 
         # TIME
@@ -528,186 +844,340 @@ class ThirdScreen(Screen):
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1000}'
         if value == "msec" and value2 == "min":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 60000}'
         if value == "msec" and value2 == "hour":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 3.6e+6}'
         if value == "msec" and value2 == "day":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 8.64e+7}'
         if value == "msec" and value2 == "year":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 3.154e+10}'
         if value == "sec" and value2 == "msec":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1000}'
         if value == "sec" and value2 == "min":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 60}'
         if value == "sec" and value2 == "hour":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 3600}'
         if value == "sec" and value2 == "day":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 86400}'
         if value == "sec" and value2 == "year":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 3.154e+7}'
         if value == "min" and value2 == "msec":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 60000}'
         if value == "min" and value2 == "sec":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 60}'
         if value == "min" and value2 == "hour":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 60}'
         if value == "min" and value2 == "day":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 1440}'
         if value == "min" and value2 == "year":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 525600}'
         if value == "hour" and value2 == "msec":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 3.6e+6}'
         if value == "hour" and value2 == "sec":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 3600}'
         if value == "hour" and value2 == "min":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 60}'
         if value == "hour" and value2 == "day":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 24}'
         if value == "hour" and value2 == "year":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1000}'
         if value == "day" and value2 == "msec":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 8.64e+7}'
         if value == "day" and value2 == "sec":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 86400}'
         if value == "day" and value2 == "min":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 1440}'
         if value == "day" and value2 == "hour":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 24}'
         if value == "day" and value2 == "year":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) / 365}'
         if value == "year" and value2 == "msec":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 3.154e+10}'
         if value == "year" and value2 == "sec":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 3.154e+7}'
         if value == "year" and value2 == "min":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 525600}'
         if value == "year" and value2 == "hour":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 8760}'
         if value == "year" and value2 == "day":
             if from_value == "":
                 from_value = 0
                 self.ids.to_id.text = '0'
             else:
+                if not from_value.isdigit():
+                    from_value = "".join(c for c in from_value if c.isdecimal())
+                    expression = self.ids.from_id.text
+                    expression = expression[:-1]
+                    self.ids.from_id.text = expression
                 self.ids.to_id.text = f'{int(from_value) * 365}'
+        if from_value == "":
+            self.ids.to_id.text = '0'
+            self.ids.from_id.text = '0'
+
 
         if value == value2:
             if from_value == "":
-                from_value = 0
                 self.ids.to_id.text = '0'
+                self.ids.from_id.text = '0'
             else:
                 self.ids.to_id.text = from_value
 
