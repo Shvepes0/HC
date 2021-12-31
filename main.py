@@ -220,7 +220,7 @@ Builder.load_string("""
             
                 
             GridLayout:
-                rows: 2
+                rows: 2 
                 cols: 2
                 GridLayout:
                     size_hint_x: 1.5
