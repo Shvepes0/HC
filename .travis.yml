@@ -28,7 +28,7 @@ install:
   - ls -la
   - ls bin/ -l
   - gem install dpl --pre
-  - dpl releases --token $GITHUB_TOKEN --file "bin/mobileapp001-0.8-armeabi-v7a-debug.apk" --tag_name "v.0.8"
+  - dpl releases --token $GITHUB_TOKEN --file "bin/mobileapp001-0.8.2-armeabi-v7a-debug.apk" --tag_name "v.0.8.2"
   - echo "TODO COMPILE 64bit"
   - ls -l /home/travis/
   - ls -l /home/travis/build/Shvepes/pythonProject7/
@@ -45,5 +45,5 @@ install:
   - ls bin/ -l
   - echo "TODO"
   - gem install dpl --pre
-  - dpl releases --token $GITHUB_TOKEN --file "bin/mobileapp001-0.8-arm64-v8a-debug.apk" --tag_name "v.0.8"
+  - dpl releases --token $GITHUB_TOKEN --file "bin/mobileapp001-0.8.2-arm64-v8a-debug.apk" --tag_name "v.0.8.2"
   - echo "OK"
