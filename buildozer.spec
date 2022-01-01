@@ -1,10 +1,10 @@
 [app]
 
 # (str) Title of your application
-title = mobileapp001
+title = QuickMath
 
 # (str) Package name
-package.name = mobileapp001
+package.name = quickmath
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.shvepes
@@ -28,7 +28,7 @@ source.dir = .
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.9
+version = 0.9.01
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
