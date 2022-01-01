@@ -19,29 +19,56 @@ Builder.load_string("""
 
 <FirstScreen>
     GridLayout:
-        rows: 2
+        rows: 3
 
         Label:
             text: "QuickMath"
+            size_hint_y: 0.2
+            size: self.texture_size
 
+    
         GridLayout:
-            cols: 2
+            cols: 3
 
             Button:
-                text: "Unit Converters"
-                size_hint: 0.1, 0.1
+                size_hint_x: 0.3
+                size: self.texture_size
                 on_press : 
                     root.manager.transition.direction = 'right'
                     root.manager.transition.duration = .25
                     root.manager.current = "third"
+                Image:
+                    source: 'conv_logo.png'
+                    wight: 150
+                    height: 150
+                    allow_stretch: True
+                    keep_ratio: False
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+                    
+            Label:
+                text: "..."
 
             Button:
-                text: "Calculator"
-                size_hint: 0.1, 0.1
+                size_hint_x: 0.3
+                size: self.texture_size
                 on_press : 
                     root.manager.transition.direction = 'left'
                     root.manager.transition.duration = .25
                     root.manager.current = "second"
+                Image:
+                    source: 'calc_logo.png'
+                    wight: 150
+                    height: 150
+                    allow_stretch: True
+                    keep_ratio: False
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+                    
+        Label:
+            text: "V-0.8.1"
+            size_hint_y: 0.2
+            size: self.texture_size
 
 
 <SecondScreen>
@@ -54,7 +81,7 @@ Builder.load_string("""
             foreground_color:(255, 255, 255)
             text:"0"
             halign:"right"
-            font_size:60
+            font_size:108
             size_hint:(1, .20)
         GridLayout:
             cols:4
@@ -62,14 +89,15 @@ Builder.load_string("""
             # first row
             Button:
                 size_hint:(.2, .2)
+                background_normal: 'Free_Sample_By_Wix2.jfif'
                 font_size:32
-                text:"<-"
                 on_press:
                     root.manager.transition.direction = 'right'
                     root.manager.current = "first"
             Button:
                 size_hint:(.2, .2)
                 font_size:32
+                background_color:(2.05, 2.29, 2.29, .6) 
                 text:"C"
                 on_press:root.clear()
             Button:
@@ -80,25 +108,34 @@ Builder.load_string("""
             Button:
                 size_hint:(.2, .2)
                 font_size:32
-                text:"<--"
-                on_press:root.back()               
+                on_press:root.back()
+                Image:
+                    source: 'backspace.png'
+                    image_size: 0.5
+                    allow_stretch: True
+                    keep_ratio: False
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y          
             # second row
             Button:
+                markup: True
                 size_hint:(.2, .2)
-                font_size:32
-                text:"7"
+                font_size:80
+                text:"[font=Leaner-Thin]7[/font]"
                 background_color:(157/255,157/255, 157/255, 1)
                 on_press:root.pressed(7)
             Button:
+                markup: True
                 size_hint:(.2, .2)
-                font_size:32
-                text:"8"
+                font_size:80
+                text:"[font=Leaner-Thin]8[/font]"
                 background_color:(157/255,157/255, 157/255, 1)
                 on_press:root.pressed(8)
             Button:
+                markup: True
                 size_hint:(.2, .2)
-                font_size:32
-                text:"9"
+                font_size:80
+                text:"[font=Leaner-Thin]9[/font]"
                 background_color:(157/255,157/255, 157/255, 1)
                 on_press:root.pressed(9)
             Button:
@@ -108,21 +145,24 @@ Builder.load_string("""
                 on_press:root.pressed('*')
             # third row
             Button:
+                markup: True
                 size_hint:(.2, .2)
-                font_size:32
-                text:"4"
+                font_size:80
+                text:"[font=Leaner-Thin]4[/font]"
                 background_color:(157/255,157/255, 157/255, 1)
                 on_press:root.pressed(4)
             Button:
+                markup: True
                 size_hint:(.2, .2)
-                font_size:32
-                text:"5"
+                font_size:80
+                text:"[font=Leaner-Thin]5[/font]"
                 background_color:(157/255,157/255, 157/255, 1)
                 on_press:root.pressed(5)
             Button:
+                markup: True
                 size_hint:(.2, .2)
-                font_size:32
-                text:"6"
+                font_size:80
+                text:"[font=Leaner-Thin]6[/font]"
                 background_color:(157/255,157/255, 157/255, 1)
                 on_press:root.pressed(6)
             Button:
@@ -132,21 +172,24 @@ Builder.load_string("""
                 on_press:root.pressed('-')
             # fourth row
             Button:
+                markup: True
                 size_hint:(.2, .2)
-                font_size:32
-                text:"1"
+                font_size:80
+                text:"[font=Leaner-Thin]1[/font]"
                 background_color:(157/255,157/255, 157/255, 1)
                 on_press:root.pressed(1)
             Button:
+                markup: True
                 size_hint:(.2, .2)
-                font_size:32
-                text:"2"
+                font_size:80
+                text:"[font=Leaner-Thin]2[/font]"
                 background_color:(157/255,157/255, 157/255, 1)
                 on_press:root.pressed(2)
             Button:
+                markup: True
                 size_hint:(.2, .2)
-                font_size:32
-                text:"3"
+                font_size:80
+                text:"[font=Leaner-Thin]3[/font]"
                 background_color:(157/255,157/255, 157/255, 1)
                 on_press:root.pressed(3)
             Button:
@@ -155,17 +198,19 @@ Builder.load_string("""
                 text:"+"
                 on_press:root.pressed('+')
             # fifth row
-            Button:
+            Button:                
+                markup: True
                 size_hint:(.2, .2)
-                font_size:32
-                text:"x[sup]n[/sup]"
+                font_size:60
+                text:"[font=Leaner-Thin]x[sup]n[/sup][/font]"
                 background_color:(157/255,157/255, 157/255, 1)
                 markup:True
                 on_press:root.pressed('**')
             Button:
+                markup: True
                 size_hint:(.2, .2)
-                font_size:32
-                text:"0"
+                font_size:80
+                text:"[font=Leaner-Thin]0[/font]"
                 background_color:(157/255,157/255, 157/255, 1)
                 on_press:root.pressed(0)
             Button:
@@ -177,6 +222,7 @@ Builder.load_string("""
             Button:
                 size_hint:(.2, .2)
                 font_size:32
+                background_color:(2.55, 2.22, 1.14, 0.7) 
                 text:"="
                 on_press:root.answer()
 
@@ -200,25 +246,12 @@ Builder.load_string("""
                     on_text: root.choice() 
                 Button:
                     size_hint:(.2, .2)
-                    background_color:(0, 0, 0, 0)
+                    background_normal: 'Free_Sample_By_Wix.jfif'
                     on_press :
                         root.manager.transition.direction = 'left'
                         root.manager.current = "first"
-                    Image:
-                        source: 'Free_Sample_By_Wix.jfif'
-                        allow_stretch: True
-                        keep_ratio: False
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                        
-                    
-                GridLayout:
-                    rows: 2
-                    #orientation: "vertical"
-                    #size: root.width, root.height
 
-            
-                
+
             GridLayout:
                 rows: 2 
                 cols: 2
@@ -235,7 +268,7 @@ Builder.load_string("""
                         markup: True
                         text: "0"
                         text_size: self.size
-                        font_size:40
+                        font_size:80
                         halign: 'left'
                         valign: 'bottom'
                         background_color: (1, 1, 1, 1)
@@ -252,7 +285,7 @@ Builder.load_string("""
                         id: to_id
                         text: "0"
                         text_size: self.size
-                        font_size:40
+                        font_size:80
                         halign: 'left'
                         valign: 'bottom'
                         background_color: (1, 1, 1, 1)
@@ -294,70 +327,70 @@ Builder.load_string("""
                 Button:
                     markup: True
                     size_hint:(.2, .2)
-                    font_size:40
+                    font_size:80
                     text:"[font=Leaner-Thin]7[/font]"
                     background_color:(157/255,157/255, 157/255, 1)
                     on_press:root.pressed(7)
                 Button:
                     markup: True
                     size_hint:(.2, .2)
-                    font_size:40
+                    font_size:80
                     text:"[font=Leaner-Thin]8[/font]"
                     background_color:(157/255,157/255, 157/255, 1)
                     on_press:root.pressed(8)
                 Button:
                     markup: True
                     size_hint:(.2, .2)
-                    font_size:40
+                    font_size:80
                     text:"[font=Leaner-Thin]9[/font]"
                     background_color:(157/255,157/255, 157/255, 1)
                     on_press:root.pressed(9)
                 Button:
                     markup: True
                     size_hint:(.2, .2)
-                    font_size:40
+                    font_size:80
                     text:"[font=Leaner-Thin]4[/font]"
                     background_color:(157/255,157/255, 157/255, 1)
                     on_press:root.pressed(4)
                 Button:
                     markup: True
                     size_hint:(.2, .2)
-                    font_size:40
+                    font_size:80
                     text:"[font=Leaner-Thin]5[/font]"
                     background_color:(157/255,157/255, 157/255, 1)
                     on_press:root.pressed(5)
                 Button:
                     markup: True
                     size_hint:(.2, .2)
-                    font_size:40
+                    font_size:80
                     text:"[font=Leaner-Thin]6[/font]"
                     background_color:(157/255,157/255, 157/255, 1)
                     on_press:root.pressed(6)
                 Button:
                     markup: True
                     size_hint:(.2, .2)
-                    font_size:40
+                    font_size:80
                     text:"[font=Leaner-Thin]1[/font]"
                     background_color:(157/255,157/255, 157/255, 1)
                     on_press:root.pressed(1)
                 Button:
                     markup: True
                     size_hint:(.2, .2)
-                    font_size:40
+                    font_size:80
                     text:"[font=Leaner-Thin]2[/font]"
                     background_color:(157/255,157/255, 157/255, 1)
                     on_press:root.pressed(2)
                 Button:
                     markup: True
                     size_hint:(.2, .2)
-                    font_size:40
+                    font_size:80
                     text:"[font=Leaner-Thin]3[/font]"
                     background_color:(157/255,157/255, 157/255, 1)
                     on_press:root.pressed(3)
                 Button:
                     markup: True
                     size_hint:(.2, .2)
-                    font_size:40
+                    font_size:80
                     markup:True
                     on_press:root.back()
                     background_color:(157/255,157/255, 157/255, 1)
@@ -371,14 +404,14 @@ Builder.load_string("""
                 Button:
                     markup: True
                     size_hint:(.2, .2)
-                    font_size:40
+                    font_size:80
                     text:"[font=Leaner-Thin]0[/font]"
                     background_color:(157/255,157/255, 157/255, 1)
                     on_press:root.pressed(0)
                 Button:
                     markup: True
                     size_hint:(.2, .2)
-                    font_size:40
+                    font_size:80
                     text:"[font=Leaner-Thin]C[/font]"
                     on_press:root.clear()
 
@@ -392,11 +425,47 @@ class FirstScreen(Screen):
 
 class SecondScreen(Screen):
     def clear(self):
+        expression = self.ids.input.text
+        self.ids.input.font_size = f"108"
         self.ids.input.text = "0"
 
     def pressed(self, button):
         # expression to store all text field values
         expression = self.ids.input.text
+        #if expression.isdigit() == True:
+
+        if len(expression) == 9:
+            self.ids.input.font_size = f"98"
+        if len(expression) == 10:
+            self.ids.input.font_size = f"88"
+        if len(expression) == 11:
+            self.ids.input.font_size = f"78"
+        if len(expression) == 12:
+            self.ids.input.font_size = f"68"
+        if len(expression) == 13:
+            self.ids.input.font_size = f"58"
+        if len(expression) == 14:
+            self.ids.input.font_size = f"48"
+        if len(expression) == 15:
+            self.ids.input.font_size = f"38"
+
+        if len(expression) == 15:
+            expression = expression[:-1]
+        if len(expression) >= 15:
+            self.ids.input.font_size = f'58'
+
+
+        if button == "+":
+            if expression[len(expression)-1] == "+":
+                expression = expression[:-1]
+        if button == "*":
+            if expression[len(expression)-1] == "/":
+                expression = expression[:-1]
+        if button == "/":
+            if expression[len(expression)-1] == "*":
+                expression = expression[:-1]
+
+
         # if text field expression contains
         # error then set it to empty field
         if "Error" in expression:
@@ -418,13 +487,31 @@ class SecondScreen(Screen):
             self.ids.input.text = str(eval(expression))
 
         except:
-            # set text field to Error if
-            # try block throws an error
             self.ids.input.text = "Error"
+
     def back(self):
         expression = self.ids.input.text
         expression = expression[:-1]
+        if len(expression) == 8:
+            self.ids.input.font_size = f"108"
+        if len(expression) == 9:
+            self.ids.input.font_size = f"98"
+        if len(expression) == 10:
+            self.ids.input.font_size = f"88"
+        if len(expression) == 11:
+            self.ids.input.font_size = f"78"
+        if len(expression) == 12:
+            self.ids.input.font_size = f"68"
+        if len(expression) == 13:
+            self.ids.input.font_size = f"58"
+        if len(expression) == 14:
+            self.ids.input.font_size = f"48"
+        if len(expression) == 15:
+            self.ids.input.font_size = f"38"
+        if expression == "":
+            expression = "0"
         self.ids.input.text = expression
+
 
 
 
@@ -475,7 +562,6 @@ class ThirdScreen(Screen):
         self.ids.from_id.text = expression
     def clear(self):
         self.ids.from_id.text = "0"
-
 
     # LENGHT
 
