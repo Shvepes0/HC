@@ -31,13 +31,13 @@ install:
   - dpl releases --token $GITHUB_TOKEN --file "bin/quickmath-0.9.02-armeabi-v7a-debug.apk" --tag_name "v.0.9.02"
   - echo "TODO COMPILE 64bit"
   - ls -l /home/travis/
-  - ls -l /home/travis/build/Shvepes/pythonProject7/
+  - ls -l /home/travis/build/Shvepess/MyProject
   - ls -la
   - rm -r -f .buildozer
   - ls -la
-  - rm -r -f /home/travis/build/Shvepes/pythonProject7/.buildozer
+  - rm -r -f /home/travis/build/Shvepess/MyProject/.buildozer
   - ls -l /home/travis/
-  - ls -l /home/travis/build/Shvepes/pythonProject7/
+  - ls -l /home/travis/build/Shvepess/MyProject/
   - ls -l
   - yes | cp -f buildozer-64bit.spec buildozer.spec
   - yes | travis_wait 20 buildozer android debug
