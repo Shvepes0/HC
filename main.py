@@ -13,11 +13,19 @@ from kivy.uix.stencilview import StencilView
 from functools import partial
 from kivy.core.window import Window
 import time
-
+from kivy.base import runTouchApp
+from kivy.animation import Animation
 
 Builder.load_string("""
 
 <FirstScreen>
+    RelativeLayout:
+        canvas.before:
+            Color:
+                rgba: (17/255, 144/255, 203/255, 0.8)
+            Rectangle:
+                pos: self.pos
+                size: self.size
     GridLayout:
         rows: 3
 
@@ -31,16 +39,24 @@ Builder.load_string("""
             cols: 3
 
             Button:
-                size_hint_x: 0.3
+                size_hint_x: 0.6
                 size: self.texture_size
                 on_press : 
                     root.manager.transition.direction = 'right'
                     root.manager.transition.duration = .25
                     root.manager.current = "third"
+                background_color: 0,0,0,0 
+                canvas.before:
+                    Color:
+                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [(0, 0), (100, 100), (100, 100), (0, 0)]
                 Image:
                     source: 'conv_logo.png'
-                    wight: 150
-                    height: 150
+                    width: 300
+                    height: 300
                     allow_stretch: True
                     keep_ratio: False
                     center_x: self.parent.center_x
@@ -50,23 +66,31 @@ Builder.load_string("""
                 text: "..."
 
             Button:
-                size_hint_x: 0.3
+                size_hint_x: 0.6
                 size: self.texture_size
                 on_press : 
                     root.manager.transition.direction = 'left'
                     root.manager.transition.duration = .25
                     root.manager.current = "second"
+                background_color: 0,0,0,0 
+                canvas.before:
+                    Color:
+                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [(100, 100), (0, 0), (0, 0), (100, 100)]
                 Image:
                     source: 'calc_logo.png'
-                    wight: 150
-                    height: 150
+                    width: 200
+                    height: 200
                     allow_stretch: True
                     keep_ratio: False
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
                     
         Label:
-            text: "V-0.8.1"
+            text: "V-0.8.2"
             size_hint_y: 0.2
             size: self.texture_size
 
@@ -83,6 +107,13 @@ Builder.load_string("""
             halign:"right"
             font_size:108
             size_hint:(1, .20)
+            background_color: (17/255, 144/255, 203/255, 0.8)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
         GridLayout:
             cols:4
             rows:5
@@ -96,18 +127,18 @@ Builder.load_string("""
                     root.manager.current = "first"
             Button:
                 size_hint:(.2, .2)
-                font_size:32
+                font_size:80
                 background_color:(2.05, 2.29, 2.29, .6) 
                 text:"C"
                 on_press:root.clear()
             Button:
                 size_hint:(.2, .2)
-                font_size:32
+                font_size:80
                 text:"/"
                 on_press:root.pressed('/')
             Button:
                 size_hint:(.2, .2)
-                font_size:32
+                font_size:80
                 on_press:root.back()
                 Image:
                     source: 'backspace.png'
@@ -140,7 +171,7 @@ Builder.load_string("""
                 on_press:root.pressed(9)
             Button:
                 size_hint:(.2, .2)
-                font_size:32
+                font_size:80
                 text:"X"
                 on_press:root.pressed('*')
             # third row
@@ -167,7 +198,7 @@ Builder.load_string("""
                 on_press:root.pressed(6)
             Button:
                 size_hint:(.2, .2)
-                font_size:32
+                font_size:80
                 text:"-"
                 on_press:root.pressed('-')
             # fourth row
@@ -194,7 +225,7 @@ Builder.load_string("""
                 on_press:root.pressed(3)
             Button:
                 size_hint:(.2, .2)
-                font_size:32
+                font_size:80
                 text:"+"
                 on_press:root.pressed('+')
             # fifth row
@@ -215,13 +246,13 @@ Builder.load_string("""
                 on_press:root.pressed(0)
             Button:
                 size_hint:(.2, .2)
-                font_size:32
+                font_size:80
                 text:"."
                 background_color:(157/255,157/255, 157/255, 1)
                 on_press:root.pressed('.')
             Button:
                 size_hint:(.2, .2)
-                font_size:32
+                font_size:80
                 background_color:(2.55, 2.22, 1.14, 0.7) 
                 text:"="
                 on_press:root.answer()
@@ -244,6 +275,7 @@ Builder.load_string("""
                     text: "Length"
                     values: ["Length", "Time", "Mass"]
                     on_text: root.choice() 
+                    animation:
                 Button:
                     size_hint:(.2, .2)
                     background_normal: 'Free_Sample_By_Wix.jfif'
@@ -271,15 +303,15 @@ Builder.load_string("""
                         font_size:80
                         halign: 'left'
                         valign: 'bottom'
-                        background_color: (1, 1, 1, 1)
+                        background_color: (17/255, 144/255, 203/255, 0.8)
                         canvas.before:
                             Color:
                                 rgba: self.background_color
                             Rectangle:
                                 size: self.size
                                 pos: self.pos
-                        color: (0, 0, 0, 1)
-                        on_text: root.length(from_id.text, to_id.text, spinner_id.text, spinner2_id.text)
+                        color: (1, 1, 1, 1)
+                        on_text: root.length(from_id.text, spinner_id.text, spinner2_id.text)
                         
                     Label:
                         id: to_id
@@ -288,14 +320,15 @@ Builder.load_string("""
                         font_size:80
                         halign: 'left'
                         valign: 'bottom'
-                        background_color: (1, 1, 1, 1)
+                        background_color: (17/255, 144/255, 203/255, 0.8)
                         canvas.before:
                             Color:
                                 rgba: self.background_color
                             Rectangle:
                                 size: self.size
                                 pos: self.pos
-                        color: (0, 0, 0, 1)
+                        color: (1, 1, 1, 1)
+                        #on_text: root.pressed()
         
                 GridLayout:
                     rows: 2
@@ -303,17 +336,18 @@ Builder.load_string("""
                     
                     Spinner:
                         id: spinner_id
-                        font_size:32
+                        font_size:80
                         text: "-"
                         values: ["km", "m", "cm","mm","mil"]
+                        on_text: root.length(from_id.text, spinner_id.text, spinner2_id.text)
+
         
                     Spinner:
                         id: spinner2_id
-                        font_size:32
+                        font_size:80
                         text: "-"
                         values: ["km", "m", "cm","mm","mil"]
-        
-                        #on_text: root.spinner_clicked(spinner_id.text)
+                        on_text: root.length(from_id.text, spinner_id.text, spinner2_id.text)
 
     
         BoxLayout:
@@ -559,13 +593,16 @@ class ThirdScreen(Screen):
     def back(self):
         expression = self.ids.from_id.text
         expression = expression[:-1]
+        if expression == "":
+            expression = "0"
         self.ids.from_id.text = expression
     def clear(self):
         self.ids.from_id.text = "0"
 
+
     # LENGHT
 
-    def length(self, from_value, to_id, value, value2):
+    def length(self, from_value, value, value2):
         if value == "km" and value2 == "m":
             if from_value == "":
                 from_value = 0
@@ -1270,6 +1307,7 @@ class ThirdScreen(Screen):
 
 class MyApp(App):
     def build(self):
+        self.icon = "app_logo.jpg"
         sm = ScreenManager()
         sm.add_widget(FirstScreen(name='first'))
         sm.add_widget(SecondScreen(name='second'))
