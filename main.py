@@ -14,18 +14,17 @@ from functools import partial
 from kivy.core.window import Window
 import time
 from kivy.base import runTouchApp
-from kivy.animation import Animation
+from kivy.graphics.texture import Texture
+
 
 Builder.load_string("""
 
 <FirstScreen>
-    RelativeLayout:
-        canvas.before:
-            Color:
-                rgba: (17/255, 144/255, 203/255, 0.8)
-            Rectangle:
-                pos: self.pos
-                size: self.size
+    Image:
+        source: 'gradient.png'
+        allow_stretch: True
+        keep_ratio: False      
+               
     GridLayout:
         rows: 3
 
@@ -48,7 +47,7 @@ Builder.load_string("""
                 background_color: 0,0,0,0 
                 canvas.before:
                     Color:
-                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+                        rgba: (209/255,228/255,238/255,0.3) if self.state=='normal' else (0,.7,.7,1)
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -75,7 +74,7 @@ Builder.load_string("""
                 background_color: 0,0,0,0 
                 canvas.before:
                     Color:
-                        rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
+                        rgba: (209/255,228/255,238/255,0.3) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -96,6 +95,10 @@ Builder.load_string("""
 
 
 <SecondScreen>
+    Image:
+        source: 'gradient.png'
+        allow_stretch: True
+        keep_ratio: False 
     BoxLayout:
         orientation: "vertical"
         size: root.width, root.height
@@ -107,13 +110,7 @@ Builder.load_string("""
             halign:"right"
             font_size:108
             size_hint:(1, .20)
-            background_color: (17/255, 144/255, 203/255, 0.8)
-            canvas.before:
-                Color:
-                    rgba: self.background_color
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
+            background_normal: 'gradient_log.png'
         GridLayout:
             cols:4
             rows:5
@@ -140,6 +137,7 @@ Builder.load_string("""
                 size_hint:(.2, .2)
                 font_size:80
                 on_press:root.back()
+                background_color:(2.22,1.08, 1.08, 0.7)
                 Image:
                     source: 'backspace.png'
                     image_size: 0.5
@@ -253,12 +251,16 @@ Builder.load_string("""
             Button:
                 size_hint:(.2, .2)
                 font_size:80
-                background_color:(2.55, 2.22, 1.14, 0.7) 
+                background_color:(2.55, 2.22, 1.14, 0.9) 
                 text:"="
                 on_press:root.answer()
 
 
 <ThirdScreen>
+    Image:
+        source: 'gradient.png'
+        allow_stretch: True
+        keep_ratio: False 
 
     BoxLayout:
         orientation: "vertical"
@@ -297,19 +299,10 @@ Builder.load_string("""
         
                     Label:
                         id: from_id
-                        markup: True
                         text: "0"
                         text_size: self.size
                         font_size:80
-                        halign: 'left'
-                        valign: 'bottom'
-                        background_color: (17/255, 144/255, 203/255, 0.8)
-                        canvas.before:
-                            Color:
-                                rgba: self.background_color
-                            Rectangle:
-                                size: self.size
-                                pos: self.pos
+                        background_normal: 'gradient_log.png'
                         color: (1, 1, 1, 1)
                         on_text: root.length(from_id.text, spinner_id.text, spinner2_id.text)
                         
@@ -320,13 +313,7 @@ Builder.load_string("""
                         font_size:80
                         halign: 'left'
                         valign: 'bottom'
-                        background_color: (17/255, 144/255, 203/255, 0.8)
-                        canvas.before:
-                            Color:
-                                rgba: self.background_color
-                            Rectangle:
-                                size: self.size
-                                pos: self.pos
+                        background_normal: 'gradient_log_2.png'
                         color: (1, 1, 1, 1)
                         #on_text: root.pressed()
         
@@ -427,7 +414,7 @@ Builder.load_string("""
                     font_size:80
                     markup:True
                     on_press:root.back()
-                    background_color:(157/255,157/255, 157/255, 1)
+                    background_color:(2.22,1.08, 1.08, 1)
                     Image:
                         source: 'backspace.png'
                         image_size: 0.5
@@ -445,6 +432,7 @@ Builder.load_string("""
                 Button:
                     markup: True
                     size_hint:(.2, .2)
+                    background_color:(2.05, 2.29, 2.29, .6) 
                     font_size:80
                     text:"[font=Leaner-Thin]C[/font]"
                     on_press:root.clear()
@@ -1307,7 +1295,7 @@ class ThirdScreen(Screen):
 
 class MyApp(App):
     def build(self):
-        self.icon = "app_logo.jpg"
+        self.icon = "app_logo.png"
         sm = ScreenManager()
         sm.add_widget(FirstScreen(name='first'))
         sm.add_widget(SecondScreen(name='second'))
