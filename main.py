@@ -62,7 +62,7 @@ Builder.load_string("""
                     center_y: self.parent.center_y
                     
             Label:
-                text: "..."
+                text: ""
 
             Button:
                 size_hint_x: 0.6
@@ -96,7 +96,7 @@ Builder.load_string("""
 
 <SecondScreen>
     Image:
-        source: 'gradient.png'
+        source: 'gradient (4).png'
         allow_stretch: True
         keep_ratio: False 
     BoxLayout:
@@ -114,6 +114,7 @@ Builder.load_string("""
         GridLayout:
             cols:4
             rows:5
+            spacing: 10
             # first row
             Button:
                 size_hint:(.2, .2)
