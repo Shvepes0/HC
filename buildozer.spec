@@ -7,7 +7,7 @@ title = QuickMath
 package.name = quickmath
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.shvepess
+package.domain = org.shvepes0
 
 # (str) Source code where the main.py live
 source.dir = .
