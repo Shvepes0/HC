@@ -46,5 +46,5 @@ install:
   - echo "TODO"
   - gem install dpl --pre
   - dpl releases --token $GITHUB_TOKEN --file "bin/quickmath-1.0-arm64-v8a-debug.apk" --tag_name "v.1.0"
-Script:
+script:
   - echo "OK"
