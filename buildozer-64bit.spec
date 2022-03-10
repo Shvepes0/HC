@@ -1,7 +1,7 @@
 [app]
 
 # (str) Title of your application
-title = QuickMatch
+title = QuickMath
 
 # (str) Package name
 package.name = quickmath
