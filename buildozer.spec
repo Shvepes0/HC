@@ -1,6 +1,6 @@
 [app]
 
-# (str) Title of your application
+# (str) Title of your application1
 title = QuickMath
 
 # (str) Package name
