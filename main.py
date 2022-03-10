@@ -89,7 +89,7 @@ Builder.load_string("""
                     center_y: self.parent.center_y
                     
         Label:
-            text: "V-0.8.2"
+            text: "V-1.0"
             size_hint_y: 0.2
             size: self.texture_size
 
@@ -114,7 +114,7 @@ Builder.load_string("""
         GridLayout:
             cols:4
             rows:5
-            spacing: 10
+            spacing: -3
             # first row
             Button:
                 size_hint:(.2, .2)
@@ -466,16 +466,16 @@ class SecondScreen(Screen):
         if len(expression) == 12:
             self.ids.input.font_size = f"68"
         if len(expression) == 13:
-            self.ids.input.font_size = f"58"
+            self.ids.input.font_size = f"68"
         if len(expression) == 14:
-            self.ids.input.font_size = f"48"
+            self.ids.input.font_size = f"65"
         if len(expression) == 15:
-            self.ids.input.font_size = f"38"
+            self.ids.input.font_size = f"65"
 
         if len(expression) == 15:
             expression = expression[:-1]
         if len(expression) >= 15:
-            self.ids.input.font_size = f'58'
+            self.ids.input.font_size = f'65'
 
 
         if button == "+":
@@ -489,13 +489,9 @@ class SecondScreen(Screen):
                 expression = expression[:-1]
 
 
-        # if text field expression contains
-        # error then set it to empty field
         if "Error" in expression:
             expression = "0"
-        # if text filed expression contains
-        # 0 then first set the field to empty and
-        # display the button text pressed by user
+
         if expression == "0":
             self.ids.input.text = ""
             self.ids.input.text = f"{button}"
@@ -505,9 +501,11 @@ class SecondScreen(Screen):
     def answer(self):
         expression = self.ids.input.text
         try:
-            # evaluate text field expression
-            # using eval() function
             self.ids.input.text = str(eval(expression))
+            round_ = round(float(self.ids.input.text), 9)
+            if len(expression) >= 15:
+                self.ids.input.text = "{:.2e}".format(expression)
+            self.ids.input.text = str(round_)
 
         except:
             self.ids.input.text = "Error"
@@ -526,11 +524,11 @@ class SecondScreen(Screen):
         if len(expression) == 12:
             self.ids.input.font_size = f"68"
         if len(expression) == 13:
-            self.ids.input.font_size = f"58"
+            self.ids.input.font_size = f"68"
         if len(expression) == 14:
-            self.ids.input.font_size = f"48"
+            self.ids.input.font_size = f"65"
         if len(expression) == 15:
-            self.ids.input.font_size = f"38"
+            self.ids.input.font_size = f"65"
         if expression == "":
             expression = "0"
         self.ids.input.text = expression
@@ -1304,5 +1302,15 @@ class MyApp(App):
 
         return sm
 
-
 MyApp().run()
+
+#==========================================
+#******************************************
+#        ___        ___________  _______      _______    ___   ______
+#       / _ \       | | \   | |  |      |     |  __  |   | |  | _____|
+#      / / \ \      | |\ \  | |  |   ___  |   | |  |  |  | | | |
+#     / /   \ \     | | \ \ | |  |  |   |  |  | |__| |   | |   | |
+#    / /-----\ \    | |  \ \| |  |  |   |  |  |____ |    | |     | |
+#   / /-------\ \   | |   \ | |  |  |___|  |  | | | |    | |       | |
+#  / /         \ \  | |    \  |  |        |   | |  | |   | |   ___ | |
+# / /           \ \ | |     | |  |______|     | |   | |  | |  |_____|
